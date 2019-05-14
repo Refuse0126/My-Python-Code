@@ -1,6 +1,6 @@
 """
 展示了shelve模块的基本用法
-将数据对象按照键存储到db文件中，再按照存入键的顺序把数据对象提取出来
+将数据对象按照键存储到shelve数据库的db文件中，再按照存入键的顺序把数据对象提取出来
 Date：2019.5.14
 """
 from person import Person,Manager
