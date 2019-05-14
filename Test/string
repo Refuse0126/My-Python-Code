@@ -1,0 +1,9 @@
+"""
+字符串的基本用法
+Date：2019.5.14
+"""
+s='hello python,my name is wuyanzu!'
+for s1 in s.split(','):
+    for i in s1.split():
+        print(i.title(),end=' ')
+        
