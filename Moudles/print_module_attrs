@@ -1,0 +1,33 @@
+"""
+打印模块文件内的所有属性，并标明属性来源
+Date:2019.5.14
+"""
+seplen=60
+sepchar='-'
+
+def listing(module,verbose=True):
+    sepline=sepchar*seplen
+    if verbose:
+        print(sepline)
+        print('name:',module.__name__,'\nfile:',module.__file__)
+        print(sepline)
+
+    #print the module.attrs with it's count
+    cnt=0
+    for attr in module.__dict__:         
+        print('%02d: %s'%(cnt,attr),end=' ')
+        if attr.startswith('__'):
+            print('<built-in name>')
+        else:
+            print(getattr(module,attr))
+        cnt+=1
+    #print the sum of module.attrs
+    if verbose:
+        print(sepline)
+        print(module.__name__,'has %d attrs'%cnt)
+        print(sepline)
+
+    #self_test
+if __name__=='__main__':    
+    import mydir
+    listing(mydir)
