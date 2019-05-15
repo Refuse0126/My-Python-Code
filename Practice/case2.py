@@ -1,5 +1,6 @@
 """
 机选双色球
+Date:2019.5.15
 """
 from random import randint
 def randm_select():
