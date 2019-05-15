@@ -7,3 +7,17 @@ for s1 in s.split(','):
     for i in s1.split():
         print(i.title(),end=' ')
         
+str='python'
+print(str[:-1]) #切片，从头到尾，除掉最后一个字符
+print(str[::-1])#start：end：step，即逆序输出
+print(str[slice(2,5)])#slice(start,end)产生一个用于切片索引的列表
+
+#字符串格式化两种：格式化表达式（基于printf和基于字典）和格式化调用方法
+import sys
+print('%s is %d'%('Bob',20))                            #基于printf
+print('%(name)s is %(age)d'%{'name':'Bob','age':20})    #基于字典
+name='Bob'
+age=20
+print('%(name)s is %(age)d'%vars())                     #基于字典，通过变量名来访问定义过的变量表
+#基于格式化调用方法，可以指定位置，属性，键名来访问变量
+print('{0} is {person[age]},this is {1.platform}'.format('Bob',sys,person={'name':'haha','age':20}))
