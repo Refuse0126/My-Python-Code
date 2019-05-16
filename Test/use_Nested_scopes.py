@@ -41,7 +41,13 @@ f=external2('hello')
 f('python')
 f('vscode')
 
-#6.使用nonlocal声明修改上层作用域变量，以实现修改状态信息，例如计数器功能
+#6.两层lambda实现嵌套作用域
+action=(lambda hello:(lambda string:print(hello,string)))
+f=action('hello')
+f('python')
+f('vscode')
+
+#7.使用nonlocal声明修改上层作用域变量，以实现修改状态信息，例如计数器功能
 def external3(hello):
     cnt=0
     def inside(string):
