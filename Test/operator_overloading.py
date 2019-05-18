@@ -44,7 +44,8 @@ class Next2():
 class attrTest():
     def __init__(self):
         pass
-    def __getattr__(self,attrname):
+    def __getattr__(self,attrname):                     #通过点号运算符访问属性时，若实例有这个属性，则不需要重载也可以获取，所以__getattr__的主要作用
+                                                        #是用来定义当访问未定义的属性时应该有的行为，
         if attrname in self.__dict__:
             return self.__dict__[attrname]
         else:
