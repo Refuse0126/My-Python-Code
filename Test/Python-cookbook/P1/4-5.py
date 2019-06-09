@@ -1,3 +1,6 @@
+"""
+Date:2019.6.9
+"""
 def fun4():
     #1.4 heapq堆模块
     import heapq
