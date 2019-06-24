@@ -38,13 +38,14 @@ def fun2():
     print(filenames)
 
 
-#应用1：查找某个路径下所有的某个类型文件
+#应用：查找某个路径下所有的某个类型文件(两种方式，一种listdir递归，一种os.walk遍历)
 def fun3():
     def mylistdir(dir,tag):#其中tag为关键词，可以是拓展名，也可以是关键字，类似Ctrl+find
         import fnmatch
         for item in os.listdir(dir):
-            if os.path.isdir(item):
-                yield from mylistdir(item,tag)
+            tempdir=os.path.join(dir,item) #!!!!!!!!!!!!!!!!!!!这里要使用全路径进行类型检测，才能实现递归的效果！！！！！！！！！！！！！！
+            if os.path.isdir(tempdir):
+                yield from mylistdir(tempdir,tag)
             elif fnmatch.fnmatch(item,tag):
                 yield item
            
@@ -52,7 +53,7 @@ def fun3():
     print(list(mylistdir(dir,'*.py')))
 
 def fun4():
-    def getFiles(dir, suffix): # 查找根目录，文件后缀 
+    def get_dir_files(dir, suffix): # 查找根目录，文件后缀 
         res = []
         for root, directory, files in os.walk(dir):  # =>当前根,根下目录,目录下的文件
             for filename in files:
@@ -61,19 +62,14 @@ def fun4():
                     #res.append(os.path.join(root, filename)) # =>吧一串字符串组合成路径
                     res.append(filename)
         return res
-    print(getFiles('./','.py'))
-    
-def fun5():
-    for root, directory, files in os.walk('./'):
-        print(root)
-        print(directory)
-        print(files)
+    print(get_dir_files('./','.py'))
 
 if __name__=='__main__':
     fun1()
     fun2()
     fun3()
     fun4()
-    
+   
+   
 
     
