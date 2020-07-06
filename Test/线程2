@@ -1,0 +1,153 @@
+import threading
+import time
+import queue
+"""
+Date:2020-7-5
+"""
+#1.同步锁:保证在某个线程执行中，不让CPU切换到其他线程，
+def test1(r):
+    global num
+    r.acquire()
+    temp=num
+    time.sleep(0.00000001)
+    num=temp-1
+    r.release()
+    
+def fun1():
+    global num
+    num=100
+    r=multiprocessing.Lock()
+    ts=[]
+    for i in range(100):
+        t=threading.Thread(target=test1,args=(r,))
+        t.start()
+        ts.append(t)
+    for i in range(100):
+        ts[i].join()
+    print('num=',num)
+
+#2.线程死锁，两个锁都在等待对方释放
+# def actionA():
+#     A.acquire()
+#     print('gotA->',time.ctime())
+#     time.sleep(1)
+    
+#     B.acquire()
+#     print('gotB->',time.ctime())
+#     time.sleep(1)
+
+#     B.release()
+#     A.release()
+# def actionB():
+#     B.acquire()
+#     print('gotB->',time.ctime())
+#     time.sleep(1)
+
+#     A.acquire()
+#     print('gotA->',time.ctime())
+#     time.sleep(1)
+    
+#     A.release()
+#     B.release()
+#3,递归锁：内部有个计数器逻辑，只要有人在使用锁，则不允许其他人申请锁执行线程
+def actionA():
+    r.acquire()
+    print('gotA->',time.ctime())
+    time.sleep(1)
+    
+    r.acquire()
+    print('gotB->',time.ctime())
+    time.sleep(1)
+
+    r.release()
+    r.release()
+def actionB():
+    r.acquire()
+    print('gotB->',time.ctime())
+    time.sleep(1)
+
+    r.acquire()
+    print('gotA->',time.ctime())
+    time.sleep(1)
+    
+    r.release()
+    r.release()
+def test2():
+    actionA()
+    actionB()
+
+def fun2():
+    global A,B,r
+    r=multiprocessing.RLock()
+    A=multiprocessing.Lock()
+    B=multiprocessing.Lock()
+    ts=[]
+    for i in range(5):
+        t=threading.Thread(target=test2)
+        t.start()
+        ts.append(t)
+    for i in range(5):
+        ts[i].join()
+    
+#4.同步对象:多线程之间本来来是相互独立的，可以通过创建要给event对象（多个线程公用一个全局标志位）来将线程同步
+class boss(threading.Thread):
+    def run(self):
+        print('今晚要加班！！')
+        event.set()
+        time.sleep(3)
+        print('算了，今天下班吧')
+        event.set()
+        while event.isSet():pass
+
+class worker(threading.Thread):
+    def run(self):
+        event.wait()
+        print('哎呀，真的命苦啊....')
+        event.clear()
+        event.wait()
+        print('卧槽，boss良心发现了...')
+        event.clear()
+        time.sleep(2)
+def fun3():
+    global event
+    event=threading.Event()
+    a=boss()
+    b=worker()
+    a.start()
+    b.start()
+    a.join()
+    b.join()
+
+#5.线程的信号量--进程的进程池:同一时刻最大支持的线程或者进程数量
+
+#6.线程间数据通信：队列
+def test4(q):
+    print(q.get(False))
+    time.sleep(1)
+
+def fun4():
+    q=queue.Queue(4)
+    ts=[]
+    for i in range(20):
+        t=threading.Thread(target=test4,args=(q,))
+        q.put(i+1,False)
+        t.start()
+        ts.append(t)
+        time.sleep(0.01)
+    for i in range(20):
+        ts[i].join()
+    
+
+
+
+
+if __name__=='__main__':
+    #fun1()
+    #fun2()
+    #fun3()
+    fun4()
+
+
+    print('主进程end...')
+
+
