@@ -1,0 +1,50 @@
+<!-- date：2020-8-10
+基本form标签用法 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="" enctype="multipart/form-data">
+        <h1>From表单<h1>
+        <h2>input标签</h2>
+        <p>用户名<input type="text" name="username"></p>
+        <p>密码 <input type="password" name="password"></p>
+        <!-- 这里两个radio有相同的name属性，只会被允许单选 -->
+        <p>性别：男<input type="radio" name="gender" value="男"> 女<input type="radio" name="gender" value="女"></p>
+        <p><input type="submit" value="登录"></p>
+    
+        <h2>select标签</h2>
+        省份：
+        <select name="省份" >
+            <option value="北京" selected="selected">北京</option>
+            <option value="新疆">新疆</option>
+            <option value="浙江">浙江</option>
+        </select>
+
+        <h2>table标签</h2>
+        <!-- border：边框效果 -->
+        <table border="2px">
+            <!-- 现在这个thead和tbody也没啥用，自己内部实现还是如此 -->
+            <thead>
+                <tr>
+                    <th>abc</th>
+                    <th>abc</th>
+                    <th>abc</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td rowspan="2">abc</td>
+                    <td>abc</td>
+                    <td colspan="2">abc</td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
+
+</body>
+</html>
