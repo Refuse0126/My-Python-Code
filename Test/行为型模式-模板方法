@@ -1,0 +1,38 @@
+from abc import ABCMeta,abstractmethod
+import time
+"""
+Date:2021.1.10
+8.模板方法
+内容：定义一个算法的框架，具体细节由子类实现，整体框架不会改变
+"""
+
+class MyFramwork():
+    def __init__(self,msg="hello...."):
+        self.msg = msg
+    # -----具体操作，子类实现----
+    def start(self):
+        print("开始运行")
+    def stop(self):
+        print("运行结束")
+    def do_something(self):
+        pass
+    # ----整体框架不变------
+    def run(self):
+        self.start()
+        cnt = 0
+        while cnt<3:
+            print(self.msg)
+            time.sleep(1)
+            cnt = cnt + 1
+        self.do_something()
+        self.stop()
+
+class Test(MyFramwork):
+    def do_something(self):
+        print("我是真的帅")
+
+
+test = Test()
+test.run()
+
+
