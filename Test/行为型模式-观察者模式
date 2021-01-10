@@ -1,0 +1,39 @@
+from abc import ABCMeta,abstractmethod
+"""
+Date:2021.1.10
+6.观察者模式
+内容：定义对象之间的一对多依赖关系，当一个对象状态发生改变时，所有依赖它的对象都会自动更新，也即“发布-订阅”模式
+"""
+# --抽象发布者--
+class Noitce:
+    def __init__(self):
+        self.obs = []
+    def attach(self,obs):
+        self.obs.append(obs)
+    def detach(self,obs):
+        self.obs.remove(obs)
+    def notify(self,message):
+        for obs in self.obs:
+            obs.update(message)
+# --抽象订阅者--
+class Observer():
+    def __init__(self,info =  None):
+        self.info = info
+    def update(self,message):
+        if message != self.info:
+            self.info = message
+            print("收到：",message)
+        else:
+            print("老早就知道了")
+
+a = Observer()
+b = Observer()
+
+company = Noitce()
+company.attach(a)
+company.attach(b)
+company.notify("公司明天放假")
+company.detach(a)
+company.notify("紧急通知，明天加班")
+company.attach(a)
+company.notify("紧急通知，明天加班")
