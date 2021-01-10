@@ -1,0 +1,40 @@
+
+"""
+Date:2021.1.10
+6.责任链模式
+内容：使多个对象都有机会处理请求，并且将这些对象连成一条链，具体谁执行由运行时决定
+"""
+
+class CEO:
+    def handle(self):
+        print("你在做梦")
+    def deal(self):
+        if day<10:
+            print("准了")
+        else:
+            self.handle()
+class Manager:
+    def handle(self):
+        self.next = CEO()
+        print("我权力不够，问下{next}".format(next=self.next.__class__.__name__))
+        self.next.deal()
+    def deal(self):
+        if day<5:
+            print("准了")
+        else:
+            self.handle()
+
+class Supervisor:
+    def handle(self):
+        self.next = Manager()
+        print("我权力不够，问下{next}".format(next=self.next.__class__.__name__))
+        self.next.deal()
+    def deal(self):
+        if day<3:
+            print("准了")
+        else:
+            self.handle()
+
+day = 10
+a = Supervisor()
+a.deal()
